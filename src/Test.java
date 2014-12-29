@@ -10,7 +10,10 @@ public class Test {
         double startValue=30;
         double stepSize = 0.5;
         int iterations = 10000;
+        int selectedFormula = 1;
 
-        System.out.println("Min-Value: "+ mp.calculate(startValue, stepSize, paramT, iterations));
+        double caclulatedMinValue = mp.calculate(startValue, stepSize, paramT, iterations, selectedFormula);
+
+        System.out.println("Min-Value: "+ caclulatedMinValue);
     }
 }

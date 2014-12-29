@@ -5,6 +5,7 @@ public class Functions {
 
     public Functions(){}
 
+
     public double function1(double x){
         double y = Math.pow(x, 2);
         return y;
