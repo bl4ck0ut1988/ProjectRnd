@@ -7,9 +7,9 @@ public class Test {
         MetropolisProb mp = new MetropolisProb();
 
         double paramT = 0.1;
-        double startingPointX=4;
+        double startingPointX=-10;
         double stepSize = 1;
-        int iterations = 100000;
+        int iterations = 10000;
         int selectedFormula = 2;
 
         double caclulatedMinValue = mp.calculate(startingPointX, stepSize, paramT, iterations, selectedFormula);

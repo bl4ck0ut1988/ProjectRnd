@@ -22,19 +22,24 @@ public class MetropolisProb {
 
         for (int i=0; i<iterations; i++){
             newPositionX = randomStep(currentPositionX, stepSize);
-            double tempValue = functions(newPositionX, formula);
-            if (functions(newPositionX, formula) < functions(currentPositionX, formula)){
+            System.out.println("newPosX: "+newPositionX);
+            double currentY = functions(currentPositionX, formula);
+            double newY = functions(newPositionX, formula);
+            if (newY < currentY){
                 currentPositionX = newPositionX;
+                if(newY < minValue){
+                    minValue = newY;
+                }
             }
             else{
-                double metropolisProb = Math.pow(Math.E, -((functions(newPositionX, formula) - functions(currentPositionX, formula))/(parameterT)));
+                double metropolisProb = Math.pow(Math.E, -((newY - currentY)/(parameterT)));
                 if(Math.random()<=metropolisProb){
                     currentPositionX = newPositionX;
                 }
             }
         }
 
-        return functions(currentPositionX, formula);
+        return minValue;
     }
 
     /**
