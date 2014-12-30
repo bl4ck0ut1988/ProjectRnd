@@ -3,47 +3,44 @@
  */
 public class MetropolisProb {
 
-    Functions f;
-
     public MetropolisProb (){
-        f = new Functions();
     }
 
     /**
      *
-     * @param startValue
-     * @param stepSize
-     * @param paramT
-     * @param iterations
-     * @return
+     * @param startingPositionX x-coordinate from where the Algorithm starts
+     * @param stepSize size of iteration steps
+     * @param parameterT used in metropolis algorithm calculations
+     * @param iterations number of algorithm iterations
+     * @return the X-Coordinate of the minima
      */
-    public double calculate(double startValue, double stepSize, double paramT, int iterations, int formulaSelection){
-        double minValue = functions(startValue, formulaSelection);
+    public double calculate(double startingPositionX, double stepSize, double parameterT, int iterations, int formulaSelection){
+
+        double minValue = functions(startingPositionX, formulaSelection);
+        double currentPositionX=startingPositionX;
+        double newPositionX;
+
         for (int i=0; i<iterations; i++){
-            System.out.println("Old X: "+startValue);
-            startValue = randomStep(startValue, stepSize);
-            double tempValue = functions(startValue, formulaSelection);
-            if (tempValue < minValue){
-                minValue = tempValue;
+            newPositionX = randomStep(currentPositionX, stepSize);
+            double tempValue = functions(newPositionX, formulaSelection);
+            if (functions(newPositionX, formulaSelection) < functions(currentPositionX, formulaSelection)){
+                currentPositionX = newPositionX;
             }
             else{
-                double metropolisProb = Math.pow(Math.E, -((tempValue - minValue)/(paramT)));
+                double metropolisProb = Math.pow(Math.E, -((functions(newPositionX, formulaSelection) - functions(currentPositionX, formulaSelection))/(parameterT)));
                 if(Math.random()<=metropolisProb){
-                    System.out.println("BOOOOM");
-                    minValue = tempValue;
+                    currentPositionX = newPositionX;
                 }
             }
-            System.out.println("New X: "+startValue);
-            System.out.println("Current Y-Value: "+tempValue);
-            System.out.println("Min Y-Value: "+minValue+"\n");
         }
-        return minValue;
+
+        return functions(currentPositionX, formulaSelection);
     }
 
     /**
      *
      * @param value value which gets iterated
-     * @param stepSize size of iteration step
+     * @param stepSize size of iteration steps
      * @return iterated value
      */
     public double randomStep(double value, double stepSize){
@@ -56,12 +53,17 @@ public class MetropolisProb {
         return value;
     }
 
+    /**
+     *
+     * @param x current x-value
+     * @param selection used to select the desired formula
+     * @return calculated y-value
+     */
     public double functions(double x, int selection){
 
         double y=0;
 
         switch (selection){
-
             case 0: y = Math.pow(x, 2);
                     break;
 
