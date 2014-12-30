@@ -14,27 +14,27 @@ public class MetropolisProb {
      * @param iterations number of algorithm iterations
      * @return the X-Coordinate of the minima
      */
-    public double calculate(double startingPositionX, double stepSize, double parameterT, int iterations, int formulaSelection){
+    public double calculate(double startingPositionX, double stepSize, double parameterT, int iterations, int formula){
 
-        double minValue = functions(startingPositionX, formulaSelection);
+        double minValue = functions(startingPositionX, formula);
         double currentPositionX=startingPositionX;
         double newPositionX;
 
         for (int i=0; i<iterations; i++){
             newPositionX = randomStep(currentPositionX, stepSize);
-            double tempValue = functions(newPositionX, formulaSelection);
-            if (functions(newPositionX, formulaSelection) < functions(currentPositionX, formulaSelection)){
+            double tempValue = functions(newPositionX, formula);
+            if (functions(newPositionX, formula) < functions(currentPositionX, formula)){
                 currentPositionX = newPositionX;
             }
             else{
-                double metropolisProb = Math.pow(Math.E, -((functions(newPositionX, formulaSelection) - functions(currentPositionX, formulaSelection))/(parameterT)));
+                double metropolisProb = Math.pow(Math.E, -((functions(newPositionX, formula) - functions(currentPositionX, formula))/(parameterT)));
                 if(Math.random()<=metropolisProb){
                     currentPositionX = newPositionX;
                 }
             }
         }
 
-        return functions(currentPositionX, formulaSelection);
+        return functions(currentPositionX, formula);
     }
 
     /**
@@ -68,7 +68,10 @@ public class MetropolisProb {
                     break;
 
             case 1: y = Math.pow(x, 2)+3;
-                break;
+                    break;
+
+            case 2: y = ((3*x)/(Math.pow(x,2)+1));
+                    break;
         }
 
         return y;
