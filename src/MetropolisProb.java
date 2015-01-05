@@ -1,5 +1,5 @@
 /**
- * Created by Kevin on 29.12.2014.
+ * Created by Kevin Mattmueller on 29.12.2014.
  */
 public class MetropolisProb {
 
@@ -8,49 +8,55 @@ public class MetropolisProb {
 
     /**
      *
-     * @param startingPositionX x-coordinate from where the Algorithm starts
-     * @param stepSize size of iteration steps
-     * @param parameterT used in metropolis algorithm calculations
-     * @param iterations number of algorithm iterations
-     * @return the X-Coordinate of the minima
+     * @param startingPositionX X-position from where the Algorithm starts
+     * @param stepSize size of random step
+     * @param parameterT used in metropolis algorithm calculations. Will increase/decrease the chance of accepting a new x-position if newY > currentY.
+     * @param steps number of random steps to take
+     * @return the Y-Coordinate of the lowest found minima
      */
-    public double calculate(double startingPositionX, double stepSize, double parameterT, int iterations, int formula){
+    public double calculate(double startingPositionX, double stepSize, double parameterT, int steps, int formula){
 
         double minValue = functions(startingPositionX, formula);
         double currentPositionX=startingPositionX;
         double newPositionX;
 
-        for (int i=0; i<iterations; i++){
+        for (int i=0; i<steps; i++){
             newPositionX = randomStep(currentPositionX, stepSize);
-            double tempValue = functions(newPositionX, formula);
-            if (functions(newPositionX, formula) < functions(currentPositionX, formula)){
+            System.out.println("newPosX: "+newPositionX);
+            double currentY = functions(currentPositionX, formula);
+            double newY = functions(newPositionX, formula);
+            if (newY < currentY){
                 currentPositionX = newPositionX;
+                if(newY < minValue){
+                    minValue = newY;
+                }
             }
             else{
-                double metropolisProb = Math.pow(Math.E, -((functions(newPositionX, formula) - functions(currentPositionX, formula))/(parameterT)));
+                double metropolisProb = Math.pow(Math.E, -((newY - currentY)/(parameterT)));
+                System.out.println("Metropolis-Prob: "+metropolisProb);
                 if(Math.random()<=metropolisProb){
                     currentPositionX = newPositionX;
                 }
             }
         }
 
-        return functions(currentPositionX, formula);
+        return minValue;
     }
 
     /**
      *
-     * @param value value which gets iterated
+     * @param xPosition current x-position
      * @param stepSize size of iteration steps
-     * @return iterated value
+     * @return new x-position in random direction
      */
-    public double randomStep(double value, double stepSize){
-        if (Math.random() <= 0.5){
-            value -= stepSize;
+    public double randomStep(double xPosition, double stepSize){
+        if (Math.random() < 0.5){
+            xPosition -= stepSize;
         }
         else{
-            value += stepSize;
+            xPosition += stepSize;
         }
-        return value;
+        return xPosition;
     }
 
     /**

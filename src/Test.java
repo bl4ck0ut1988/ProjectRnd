@@ -7,12 +7,12 @@ public class Test {
         MetropolisProb mp = new MetropolisProb();
 
         double paramT = 0.1;
-        double startingPointX=4;
+        double startingPointX=20;
         double stepSize = 1;
-        int iterations = 100000;
-        int selectedFormula = 2;
+        int steps = 2000;
+        int selectedFormula = 1;
 
-        double caclulatedMinValue = mp.calculate(startingPointX, stepSize, paramT, iterations, selectedFormula);
+        double caclulatedMinValue = mp.calculate(startingPointX, stepSize, paramT, steps, selectedFormula);
 
         System.out.println("Minima: "+ caclulatedMinValue);
     }
