@@ -1,5 +1,5 @@
 /**
- * Created by Kevin on 29.12.2014.
+ * Created by Kevin Mattmueller on 29.12.2014.
  */
 public class Test {
     public static void main(String[] args) {
@@ -12,8 +12,8 @@ public class Test {
         int steps = 2000;
         int selectedFormula = 1;
 
-        double caclulatedMinValue = mp.calculate(startingPointX, stepSize, paramT, steps, selectedFormula);
+        double calculatedMinValue = mp.calculate(startingPointX, stepSize, paramT, steps, selectedFormula);
 
-        System.out.println("Minima: "+ caclulatedMinValue);
+        System.out.println("Minima: "+ calculatedMinValue);
     }
 }
